@@ -27,7 +27,7 @@ function getVideo_iframe($response) {
 function get_Video($url) {
 	$html=str_get_html($url);
 	foreach ($html->find('embed.player_conte') as $e) {
-		 
+
 	$flashvars = $e->flashvars;
 	}
 	return $flashvars;
@@ -35,13 +35,13 @@ function get_Video($url) {
 
 $response = curl($url);
 $iframe_url = getVideo_iframe($response);
-echo $iframe_url;
 $response2 = curl($iframe_url);
 $flashvars = get_Video($response2);
 $subject = $flashvars;
 $pattern = '#file=http://jkanime.net/stream/(.*)$#';
 preg_match($pattern, $subject, $match);
 $url = str_replace('file=', '', $match[0]);
+//$file = "video.php?url=$url";
 
 if($playertype == 1) {
 	$output = printf(
@@ -56,7 +56,8 @@ if($playertype == 1) {
 						});
 					</script>
 				</html>',
-				$url
+				//$file
+        $url
 			);
 } else {
 	$output =  printf(
